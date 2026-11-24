@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security KPI дашборд — навчальний приклад</title>
+<meta name="description" content="Приклад дашборда кібербезпеки за найкращими практиками (NIST SP 800-55, NACD, ISO 27001): рівні для ради, керівництва і SOC, паспорт метрик і трекер усунення.">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="sk-skip" href="#tabs">Перейти до дашборда</a>
+<div class="sk" lang="uk">
+  <header class="sk-head" id="top">
+    <div class="sk-head-row">
+      <div class="sk-head-text">
+        <p class="sk-kicker">Навчальний проєкт з курсу Information Security Management</p>
+        <h1 id="title">Дашборд кібербезпеки для ради, керівництва і SOC</h1>
+        <p class="sk-sub">Приклад на вигаданій компанії: ритейл і логістика, близько 400 працівників. Знімок даних на 24 листопада 2026 року.</p>
+      </div>
+      <button class="sk-btn sk-print" id="print-btn" type="button">Зберегти як PDF</button>
+    </div>
+
+    <div class="sk-intro">
+      <p class="sk-lede" id="takeaway">Зараз цілі досягають <b data-draw="sum-green">—</b> з <b data-draw="sum-total">—</b> операційних метрик, <b data-draw="sum-amber">—</b> близько до цілі, <b data-draw="sum-red">—</b> поза ціллю. <span data-draw="sum-detail">—</span></p>
+      <p class="sk-note"><b>Усі числа вигадані</b> для прикладу. Біля кожної цілі стоїть позначка, звідки вона: <span class="sk-tag">Д</span> із джерела (стандарт, регулятор), <span class="sk-tag">Д-практик</span> рекомендація практика (NACD), а не середнє по галузі, <span class="sk-tag">І</span> ілюстративна ціль, яку компанія має замінити своєю. Колір статусу рахується автоматично за правилом із паспорта метрики, а не ставиться вручну.</p>
+    </div>
+
+    <ul class="sk-map" aria-label="Як влаштований дашборд">
+      <li><a href="#board" data-goto="board"><b>Рада</b><span>Раз на квартал. Ризик у грошах, шість питань про захист, рішення ради.</span></a></li>
+      <li><a href="#exec" data-goto="exec"><b>Керівництво і CISO</b><span>Щомісяця. Усі 15 KPI з ціллю, трендом і власником, розріз за підрозділами.</span></a></li>
+      <li><a href="#soc" data-goto="soc"><b>SOC</b><span>Щодня. Швидкість виявлення і реагування, SLA провайдера, контрметрики.</span></a></li>
+      <li><a href="#passport" data-goto="passport"><b>Паспорт метрик</b><span>Для аудитора: формула, ціль і її джерело, власник, джерело даних.</span></a></li>
+      <li><a href="#tracker" data-goto="tracker"><b>Трекер усунення</b><span>Дошка знахідок аудитів і пентестів: хто виправляє і до якого строку.</span></a></li>
+    </ul>
+
+  </header>
+
+  <nav class="sk-tabs" id="tabs" role="tablist" aria-label="Розділи дашборда">
+    <button class="sk-tab is-on" role="tab" aria-selected="true" data-tab="board" type="button">Рада</button>
+    <button class="sk-tab" role="tab" aria-selected="false" data-tab="exec" type="button">Керівництво і CISO</button>
+    <button class="sk-tab" role="tab" aria-selected="false" data-tab="soc" type="button">SOC</button>
+    <button class="sk-tab" role="tab" aria-selected="false" data-tab="passport" type="button">Паспорт метрик</button>
+    <button class="sk-tab" role="tab" aria-selected="false" data-tab="tracker" type="button">Трекер усунення</button>
+  </nav>
+
+  <main id="main">
+
+  <section id="board" data-panel="board">
+    <h2 id="board-h">Рівень 1 · Рада директорів</h2>
+    <p class="sk-muted">Звіт раз на квартал. Кожен показник — це відповідь на питання, яке ставить рада, звичайними словами. Технічні назви подано дрібним шрифтом, щоб аудитор міг знайти метрику в паспорті.</p>
+
+    <div class="sk-card sk-verdict" id="board-verdict">
+      <h3>Головне за квартал</h3>
+      <p class="sk-lede">Рада затвердила дві суми річних втрат від кіберризиків: прийнятну і граничну. Зараз <b data-draw="b-num" data-source="board_summary" data-field="risk_red" data-row="0" data-fmt="i">—</b> з <b data-draw="b-num" data-source="board_summary" data-field="risk_total" data-row="0" data-fmt="i">—</b> сценаріїв загрожують втратами понад граничну суму, ще <b data-draw="b-num" data-source="board_summary" data-field="risk_amber" data-row="0" data-fmt="i">—</b> — понад прийнятну.</p>
+      <p class="sk-lede">Показники захисту: у нормі <b data-draw="b-num" data-source="board_summary" data-field="kpi_green" data-row="0" data-fmt="i">—</b> з <b data-draw="b-num" data-source="board_summary" data-field="kpi_total" data-row="0" data-fmt="i">—</b>, майже в нормі <b data-draw="b-num" data-source="board_summary" data-field="kpi_amber" data-row="0" data-fmt="i">—</b>, потребують уваги <b data-draw="b-num" data-source="board_summary" data-field="kpi_red" data-row="0" data-fmt="i">—</b>.</p>
+      <p class="sk-lede" data-draw="b-top-risk">—</p>
+    </div>
+
+    <h3 class="sk-sec" id="risk2-h">1. Скільки грошей ми можемо втратити через п'ять найнебезпечніших сценаріїв</h3>
+    <p class="sk-muted">Оцінка в грошах на рік для п'яти найнебезпечніших сценаріїв. Рада сама затверджує дві суми: <b>прийнятну</b> (стільки компанія готова втрачати, нічого додатково не роблячи — «апетит до ризику») і <b>граничну</b> (більше — неприйнятно, «толерантність»).</p>
+    <div class="sk-card" id="risk2-card">
+      <div class="sk-wrap">
+        <table data-source="risk_view" data-row-key="scenario" id="risk-table">
+          <thead><tr><th data-field="scenario">Що може статися</th><th class="num" data-field="ale_median">Ймовірні втрати за рік</th><th class="num" data-field="ale_p90">У поганий рік</th><th class="num" data-field="appetite">Прийнятна сума</th><th class="num" data-field="tolerance">Гранична сума</th><th data-field="status">Висновок</th></tr></thead>
+          <tbody data-draw="risk-table"></tbody>
+        </table>
+      </div>
+      <p class="sk-muted">Усі суми в млн $. «Ймовірні втрати» — найімовірніше значення оцінки. «У поганий рік» — у 9 роках із 10 втрати будуть не більшими за це число. Як читати рядок: порівняйте ймовірні втрати з прийнятною і граничною сумою. Якщо вони вищі за граничну, рада має вирішити: інвестувати в захист, застрахуватися чи свідомо прийняти ризик.</p>
+      <p class="sk-tech">Технічно: K01, кількісна оцінка ризику за методом FAIR (медіана і 90-й перцентиль очікуваних річних втрат).</p>
+    </div>
+
+    <h3 class="sk-sec" id="q-h">2. Шість питань, які рада ставить про захист</h3>
+    <div class="sk-grid-q">
+      <div class="sk-card sk-q" id="q-mfa">
+        <p class="sk-q-ask">Чи можна зайти в критичні системи з одним лише вкраденим паролем?</p>
+        <p class="sk-q-ans"><b class="sk-big" data-draw="b-num" data-source="kpi_latest" data-field="value" data-where="kpi_id=K03">—</b>% доступів захищені другим кроком входу (код у телефоні або ключ). Мета — понад <span data-draw="b-num" data-source="kpi_latest" data-field="target" data-where="kpi_id=K03">—</span>%.</p>
+        <div class="sk-line" data-draw="q-status" data-kpi="K03"></div>
+        <div class="sk-chart" data-draw="q-spark" data-kpi="K03" data-source="kpi_monthly"></div>
+        <p class="sk-tech">Технічно: MFA coverage · K03 · відповідає керівник IAM</p>
+      </div>
+      <div class="sk-card sk-q" id="q-vuln">
+        <p class="sk-q-ask">Чи довго в наших системах лишаються відомі «дірки», через які можна зламати?</p>
+        <p class="sk-q-ans"><b class="sk-big" data-draw="b-num" data-source="kpi_latest" data-field="value" data-where="kpi_id=K04b">—</b>% критичних вразливостей не закриті понад місяць. Мета — менше <span data-draw="b-num" data-source="kpi_latest" data-field="target" data-where="kpi_id=K04b">—</span>%.</p>
+        <div class="sk-line" data-draw="q-status" data-kpi="K04b"></div>
+        <div class="sk-chart" data-draw="q-spark" data-kpi="K04b" data-source="kpi_monthly"></div>
+        <p class="sk-tech">Технічно: critical vulnerabilities older than 30 days · K04b · відповідає керівник vulnerability management</p>
+      </div>
+      <div class="sk-card sk-q" id="q-phish">
+        <p class="sk-q-ask">Чи ведуться наші працівники на шахрайські листи?</p>
+        <p class="sk-q-ans"><b class="sk-big" data-draw="b-num" data-source="kpi_latest" data-field="value" data-where="kpi_id=K08a">—</b>% працівників клікнули на посилання в навчальному фішинговому листі. Мета — менше <span data-draw="b-num" data-source="kpi_latest" data-field="target" data-where="kpi_id=K08a">—</span>%.</p>
+        <div class="sk-line" data-draw="q-status" data-kpi="K08a"></div>
+        <div class="sk-chart" data-draw="q-spark" data-kpi="K08a" data-source="kpi_monthly"></div>
+        <p class="sk-tech">Технічно: phishing simulation click rate · K08a · відповідає програма обізнаності</p>
+      </div>
+      <div class="sk-card sk-q" id="q-speed">
+        <p class="sk-q-ask">Якщо нас атакують, як швидко ми це помітимо і зупинимо?</p>
+        <p class="sk-q-ans">Помічаємо за <b class="sk-big" data-draw="b-num" data-source="kpi_latest" data-field="value" data-where="kpi_id=K10">—</b> год (мета — до <span data-draw="b-num" data-source="kpi_latest" data-field="target" data-where="kpi_id=K10">—</span> год), зупиняємо за <b class="sk-big" data-draw="b-num" data-source="kpi_latest" data-field="value" data-where="kpi_id=K11">—</b> год (мета — до <span data-draw="b-num" data-source="kpi_latest" data-field="target" data-where="kpi_id=K11">—</span> год). Чим швидше, тим менші збитки.</p>
+        <div class="sk-line" data-draw="q-status" data-kpi="K10 K11" data-label="Помічаємо|Зупиняємо"></div>
+        <p class="sk-muted sk-spark-label">Помічаємо, год</p>
+        <div class="sk-chart" data-draw="q-spark" data-kpi="K10" data-source="kpi_monthly"></div>
+        <p class="sk-muted sk-spark-label">Зупиняємо, год</p>
+        <div class="sk-chart" data-draw="q-spark" data-kpi="K11" data-source="kpi_monthly"></div>
+        <p class="sk-tech">Технічно: MTTD (час до виявлення) · K10 і MTTC (час до локалізації) · K11, медіана · відповідає керівник SOC</p>
+      </div>
+      <div class="sk-card sk-q" id="q-restore">
+        <p class="sk-q-ask">Чи відновимося ми, якщо програма-вимагач зашифрує дані?</p>
+        <p class="sk-q-ans">Відновлення з резервних копій реально перевірили для <b class="sk-big" data-draw="b-num" data-source="kpi_latest" data-field="value" data-where="kpi_id=K07">—</b>% критичних систем за останній рік. Мета — <span data-draw="b-num" data-source="kpi_latest" data-field="target" data-where="kpi_id=K07">—</span>%.</p>
+        <div class="sk-line" data-draw="q-status" data-kpi="K07"></div>
+        <div class="sk-chart" data-draw="q-spark" data-kpi="K07" data-source="kpi_monthly"></div>
+        <p class="sk-tech">Технічно: restore test coverage · K07 · відповідає керівник інфраструктури</p>
+      </div>
+      <div class="sk-card sk-q" id="q-vendors">
+        <p class="sk-q-ask">Чи захищають наші дані ключові постачальники?</p>
+        <p class="sk-q-ans"><b class="sk-big" data-draw="b-num" data-source="kpi_latest" data-field="value" data-where="kpi_id=K13">—</b>% ключових постачальників пройшли перевірку безпеки і мають у договорі обов'язок захищати наші дані та вчасно повідомляти про злом. Мета — понад <span data-draw="b-num" data-source="kpi_latest" data-field="target" data-where="kpi_id=K13">—</span>%.</p>
+        <div class="sk-line" data-draw="q-status" data-kpi="K13"></div>
+        <div class="sk-chart" data-draw="q-spark" data-kpi="K13" data-source="kpi_monthly"></div>
+        <p class="sk-tech">Технічно: vendors with security assessment and cyber SLA · K13 · відповідають закупівлі / TPRM</p>
+      </div>
+    </div>
+    <p class="sk-muted">Лінія під кожною відповіддю — як показник змінювався за 12 місяців; пунктир — мета.</p>
+
+    <h3 class="sk-sec" id="inc2-h">3. Інциденти і звітування регуляторам</h3>
+    <div class="sk-grid-2">
+      <div class="sk-card" id="inc2-card">
+        <p class="sk-lede">За <span data-draw="inc-quarter">—</span>: значних інцидентів — <b data-draw="b-num" data-source="incidents_now" data-field="significant" data-row="0" data-fmt="i">—</b>, з них суттєвих — <b data-draw="b-num" data-source="incidents_now" data-field="material" data-row="0" data-fmt="i">—</b>. Суттєвий — це інцидент, що відчутно вплинув на бізнес і про який треба звітувати регулятору або інвесторам.</p>
+        <p class="sk-lede">Регуляторам вчасно подано <b data-draw="b-num" data-source="incidents_now" data-field="on_time" data-row="0" data-fmt="i">—</b> з <b data-draw="b-num" data-source="incidents_now" data-field="due" data-row="0" data-fmt="i">—</b> обов'язкових повідомлень.</p>
+        <p class="sk-muted">Строки за NIS2: перше попередження — за 24 години, повідомлення — за 72 години, фінальний звіт — за місяць.</p>
+        <p class="sk-tech">Технічно: K02 · відповідають CISO і юридичний відділ</p>
+      </div>
+      <div class="sk-card" id="inc2-chart-card">
+        <h3>Значні інциденти за кварталами</h3>
+        <div class="sk-legend"><span><span class="sk-sw sk-sw-1"></span>значні</span><span><span class="sk-sw sk-sw-m"></span>з них суттєві</span></div>
+        <div class="sk-chart sk-chart-lg" data-draw="incidents" data-source="incidents_quarterly" id="inc2-chart"></div>
+      </div>
+    </div>
+
+    <h3 class="sk-sec" id="ask2-h">4. Рішення, потрібні від ради</h3>
+    <div class="sk-card sk-board-ask" id="board2-ask">
+      <p class="sk-muted">Приклад тексту, який CISO готує до кожного засідання. У квадратних дужках — те, що вписує сама компанія.</p>
+      <ol>
+        <li><b>Виділити [сума] на захист від програм-вимагачів</b>: розділити мережу складу на ізольовані частини і перевірити відновлення всіх критичних систем. Чому: очікувані втрати від цього сценарію вищі за граничну суму, а відновлення перевірене не для всіх систем.</li>
+        <li><b>Офіційно затвердити межі ризику в грошах</b> (прийнятну і граничну суму). Зараз це робоча оцінка CISO, а не рішення ради.</li>
+        <li><b>Доручити закупівлям</b> до [дата] додати вимоги безпеки в договори з ключовими постачальниками.</li>
+        <li><b>Членам ради — пройти щорічне навчання з кібербезпеки</b> до 18.12.2026: цього вимагає NIS2.</li>
+      </ol>
+    </div>
+
+    <details id="board-glossary">
+      <summary>Словничок для ради: що означають терміни</summary>
+      <ul>
+        <li><b>Прийнятна сума (апетит до ризику)</b> — скільки рада готова втрачати на рік через кіберризики, нічого додатково не роблячи.</li>
+        <li><b>Гранична сума (толерантність)</b> — межа, вище якої втрати неприйнятні і потрібне рішення: вкласти гроші, змінити процес або застрахуватися.</li>
+        <li><b>Ймовірні втрати і «поганий рік»</b> — найімовірніша сума і сума, яку не перевищимо в 9 роках із 10 (медіана і 90-й перцентиль).</li>
+        <li><b>MFA (багатофакторна автентифікація)</b> — вхід із другим кроком: код на телефоні або фізичний ключ. Один лише вкрадений пароль тоді не допоможе зловмиснику.</li>
+        <li><b>Вразливість</b> — відома помилка в програмі чи системі, через яку можна зламати. Виправляється оновленням (патчем).</li>
+        <li><b>Фішинг-симуляція</b> — навчальний «шахрайський» лист від власної команди безпеки, щоб перевірити й навчити працівників.</li>
+        <li><b>MTTD і MTTC</b> — скільки часу минає, доки команда помітить атаку (detect) і доки зупинить її поширення (contain).</li>
+        <li><b>Кібер-SLA з постачальником</b> — пункт у договорі: як постачальник захищає наші дані і за скільки годин повідомить, якщо його зламали.</li>
+        <li><b>Суттєвий (material) інцидент</b> — інцидент, про який компанія зобов'язана повідомити регулятора або інвесторів.</li>
+      </ul>
+    </details>
+  </section>
+
+  <section id="exec" data-panel="exec" hidden>
+    <h2 id="exec-h">Рівень 2 · Керівництво і CISO</h2>
+    <p class="sk-muted">Щомісяця. Усі операційні KPI з ціллю, трендом за 12 місяців і власником; розріз за підрозділами; розрив профілю NIST CSF 2.0.</p>
+    <div class="sk-card" id="kpi-table-card">
+      <h3 id="kpi-table-h">Усі KPI, останній місяць</h3>
+      <div class="sk-wrap">
+        <table data-source="kpi_latest" data-row-key="kpi_id" id="kpi-table">
+          <thead><tr>
+            <th data-field="kpi_id">ID</th><th data-field="name">Метрика</th><th class="num" data-field="value">Значення</th><th data-field="target_label">Ціль</th><th class="num" data-field="delta">Зміна за місяць</th><th>Тренд, 12 міс.</th><th data-field="status">Статус</th><th data-field="owner">Власник</th>
+          </tr></thead>
+          <tbody data-draw="kpi-table"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="sk-grid-2">
+      <div class="sk-card" id="units-card">
+        <h3 id="units-h">Розріз за підрозділами</h3>
+        <div class="sk-toolbar">
+          <select class="dash-select" id="unit-metric" aria-label="Метрика для розрізу">
+            <option value="mfa">K03 · MFA на критичних системах</option>
+            <option value="patch14">K04a · Патчі CVSS ≥ 7 за 14 днів</option>
+            <option value="training">K09 · Навчання за 12 місяців</option>
+          </select>
+        </div>
+        <p class="sk-muted">Середнє по компанії ховає слабкі підрозділи. Пунктир — ціль з паспорта.</p>
+        <div class="sk-chart sk-chart-lg" data-draw="units" data-source="by_unit kpi_catalog" id="units-chart"></div>
+      </div>
+      <div class="sk-card" id="csf-card">
+        <h3 id="csf-h">Профіль NIST CSF 2.0: поточний і цільовий рівень</h3>
+        <p class="sk-muted">Якісна оцінка зрілості (рівні 1–4). За NIST SP 800-55 це не вимірювання, тому вона показана окремо і не усереднюється з KPI.</p>
+        <div class="sk-legend"><span>● поточний</span><span>○ цільовий</span></div>
+        <div class="sk-chart sk-chart-lg" data-draw="csf" data-source="csf_profile" id="csf-chart"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="soc" data-panel="soc" hidden>
+    <h2 id="soc-h">Рівень 3 · Операції / SOC</h2>
+    <p class="sk-muted">Щодня або щотижня. Часові метрики — медіана і 90-й перцентиль, точку відліку підписано в паспорті. Сирі лічильники (алерти) — лише діагностика, не KPI.</p>
+    <div class="sk-legend"><span><span class="sk-sw sk-sw-1"></span>медіана / значення</span><span><span class="sk-sw sk-sw-2"></span>90-й перцентиль</span><span><span class="sk-sw sk-sw-t"></span>ціль</span></div>
+    <div class="sk-grid-2">
+      <div class="sk-card" id="soc-K10"><h3>K10 · MTTD, год (від створення алерту)</h3><div class="sk-chart sk-chart-lg" data-draw="line" data-kpi="K10" data-source="kpi_monthly kpi_catalog"></div></div>
+      <div class="sk-card" id="soc-K11"><h3>K11 · MTTC, год (від підтвердження)</h3><div class="sk-chart sk-chart-lg" data-draw="line" data-kpi="K11" data-source="kpi_monthly kpi_catalog"></div></div>
+      <div class="sk-card" id="soc-K04c"><h3>K04c · Медіана днів до усунення KEV</h3><div class="sk-chart sk-chart-lg" data-draw="line" data-kpi="K04c" data-source="kpi_monthly kpi_catalog"></div></div>
+      <div class="sk-card" id="soc-K12"><h3>K12 · Частка внутрішнього виявлення, %</h3><div class="sk-chart sk-chart-lg" data-draw="line" data-kpi="K12" data-source="kpi_monthly kpi_catalog"></div></div>
+      <div class="sk-card" id="soc-K05"><h3>K05 · Покриття EDR, %</h3><div class="sk-chart sk-chart-lg" data-draw="line" data-kpi="K05" data-source="kpi_monthly kpi_catalog"></div></div>
+      <div class="sk-card" id="soc-K06"><h3>K06 · Повнота інвентаризації, % (знаменник для K03 і K05)</h3><div class="sk-chart sk-chart-lg" data-draw="line" data-kpi="K06" data-source="kpi_monthly kpi_catalog"></div></div>
+    </div>
+    <div class="sk-grid-2">
+      <div class="sk-card" id="mdr-card">
+        <h3 id="mdr-h">SLA провайдера MDR: реакція ≤ 60 хв, % пріоритетних кейсів</h3>
+        <p class="sk-muted">Договірний SLA: щонайменше <span data-draw="sla-target">—</span>% щомісяця (модель Sophos MDR). Порушень за 12 місяців: <b data-draw="sla-breaches" data-source="mdr_summary" data-field="breaches" data-row="0">—</b>. Ціль провайдера і SLA показуються окремо: примусово виконати можна лише SLA.</p>
+        <div class="sk-chart sk-chart-lg" data-draw="mdr" data-source="soc_diag" id="mdr-chart"></div>
+      </div>
+      <div class="sk-card" id="diag-card">
+        <h3 id="diag-h">Діагностика і контрметрики (не KPI)</h3>
+        <p class="sk-muted">Повторно відкриті інциденти — контрметрика до MTTD/MTTC: якщо час падає, а повторні відкриття ростуть, швидкість купується якістю.</p>
+        <div class="sk-wrap">
+          <table data-source="soc_diag" data-row-key="month" id="diag-table">
+            <thead><tr><th data-field="month">Місяць</th><th class="num" data-field="alerts">Алерти</th><th class="num" data-field="false_positive_pct">Хибні, %</th><th class="num" data-field="reopened_pct">Повторно відкриті, %</th></tr></thead>
+            <tbody data-draw="diag-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="passport" data-panel="passport" hidden>
+    <h2 id="passport-h">Паспорт метрик</h2>
+    <p class="sk-muted">Те, що перевіряє аудитор (ISO 27001 п. 9.1, IIA, SOC 2 CC4): визначення, формула, знаменник, ціль і її джерело, правило статусу, частота, власник, джерело даних, тип за NIST SP 800-55.</p>
+    <div class="sk-card">
+      <div class="sk-wrap">
+        <table class="sk-passport" data-source="kpi_catalog" data-row-key="kpi_id" id="passport-table">
+          <thead><tr>
+            <th data-field="kpi_id">ID</th><th data-field="name">Метрика</th><th data-field="definition">Визначення / формула</th><th data-field="denominator">Знаменник</th><th data-field="target_label">Ціль</th><th data-field="target_tag">Позначка</th><th data-field="target_source">Джерело цілі</th><th data-field="rag_rule">Правило статусу</th><th data-field="freq">Частота</th><th data-field="owner">Власник</th><th data-field="data_source">Джерело даних</th><th data-field="nist_type">Тип NIST</th><th data-field="lead_lag">Leading / lagging</th><th data-field="level">Рівні</th>
+          </tr></thead>
+          <tbody data-draw="passport-table"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="tracker" data-panel="tracker" hidden>
+    <h2 id="tracker-h">Трекер усунення недоліків</h2>
+    <p class="sk-lede">Незакритих знахідок: <b data-draw="rem-open" data-source="remediation_summary" data-field="open" data-row="0">—</b>, прострочених: <b data-draw="rem-overdue" data-source="remediation_summary" data-field="overdue" data-row="0">—</b> (<b data-draw="rem-pct" data-source="remediation_summary" data-field="overdue_pct" data-row="0">—</b>%), з них критичних: <b data-draw="rem-crit" data-source="remediation_summary" data-field="overdue_critical" data-row="0">—</b>. Дата зрізу: <span data-draw="rem-asof">—</span>.</p>
+    <div class="sk-card" id="kanban-card">
+      <div class="sk-toolbar sk-kbar">
+        <h3 id="kanban-h">Дошка усунення</h3>
+        <span class="sk-seg" role="group" aria-label="Як групувати картки">
+          <button class="sk-segbtn is-on" data-group="stage" aria-pressed="true">За етапом</button>
+          <button class="sk-segbtn" data-group="severity" aria-pressed="false">За критичністю</button>
+        </span>
+      </div>
+      <p class="sk-muted">Кожна картка — одна знахідка аудиту, пентесту чи оцінки. Щоб перемістити картку, змініть її етап у списку на картці. Переміщення зберігаються у вашому браузері, тож після оновлення сторінки дошка лишиться такою, як ви її залишили. Етап «Перевірка» означає, що виправлення зроблено, але аудитор або власник ризику ще має підтвердити, що воно працює.</p>
+      <p class="sk-bad" id="kanban-unsaved" hidden>Зміну не збережено: браузер заборонив зберігати дані сторінки (наприклад, у приватному режимі).</p>
+      <div class="sk-kanban" data-draw="kanban" data-source="remediation_board kanban_counts" id="kanban"></div>
+      <div class="sk-toolbar"><button class="sk-btn" id="kanban-reset">Повернути приклад до початкового стану</button></div>
+    </div>
+
+    <details class="sk-audit" id="audit-table">
+      <summary>Та сама інформація таблицею (для аудиту)</summary>
+<p class="sk-muted">Слід «знахідка → власник → дата → закриття» — саме те, що IIA Cybersecurity Topical Requirement і SOC 2 CC4.2 очікують бачити. Прострочені позначені смугою зліва.</p>
+    <div class="sk-card">
+      <div class="sk-wrap">
+        <table data-source="remediation_view" data-row-key="finding_id" id="rem-table">
+          <thead><tr><th data-field="finding_id">ID</th><th data-field="finding">Знахідка</th><th data-field="origin">Джерело</th><th data-field="severity">Критичність</th><th data-field="owner">Власник</th><th data-field="stage">Етап</th><th data-field="due">Цільова дата</th><th class="num" data-field="days_left">Днів до строку</th></tr></thead>
+          <tbody data-draw="rem-table"></tbody>
+        </table>
+      </div>
+    </div>
+    </details>
+  </section>
+
+  </main>
+
+  <footer class="sk-foot" id="method">
+    <h2>Як побудовано цей дашборд</h2>
+    <div class="sk-foot-grid">
+      <div>
+        <h3>Принципи</h3>
+        <ul>
+          <li><b>Три рівні аудиторії.</b> Рада бачить ризик у грошах і рішення, які від неї потрібні (NACD Director's Handbook on Cyber-Risk Oversight, 2026). Керівництво і CISO бачать KPI за підрозділами (McKinsey). SOC бачить хвилини, черги й SLA.</li>
+          <li><b>Паспорт метрики</b> за шаблоном NIST SP 800-55 Vol. 1 (2024): мета, формула, ціль, частота, відповідальні, джерело даних. Типи метрик — implementation, effectiveness, efficiency, impact; leading чи lagging — за визначеннями того самого документа.</li>
+          <li><b>Відтворюваність для аудиту</b> (ISO/IEC 27001:2022 п. 9.1, IIA Cybersecurity Topical Requirement, SOC 2 CC4): кожне число має визначення і власника, а знахідки — строк і слід до закриття.</li>
+          <li><b>Захист від «гри з числами»:</b> до швидкісних метрик додано контрметрики якості, біля відсотків покриття показано повноту інвентаризації, без «марнославних» лічильників на кшталт «заблокованих атак».</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Правила статусу і дизайну</h3>
+        <ul>
+          <li><b>Статус</b> (правило ілюстративне): для «більше — краще» зелений ≥ цілі, жовтий до 5 п.п. нижче, червоний нижче. Для «менше — краще» зелений ≤ цілі, жовтий ≤ 1,5 × цілі, червоний вище.</li>
+          <li><b>Метрика, що погіршується 3 місяці поспіль,</b> позначається навіть у зеленій зоні. Це захист від «кавунового ефекту», коли зовні все зелене, а всередині червоне (Protiviti).</li>
+          <li><b>Дизайн:</b> ціль поруч із числом і спарклайни замість спідометрів (Stephen Few, Edward Tufte). Колір — лише для статусу, і він завжди дублюється словом і значком (Nielsen Norman Group).</li>
+          <li><b>Контекст для цілей:</b> медіанний час до повного патчингу 43 дні (Verizon DBIR 2026), внутрішнє виявлення в 52% вторгнень (Mandiant M-Trends 2026). Тому чесний дашборд на старті часто червоний.</li>
+        </ul>
+      </div>
+    </div>
+
+    <details class="sk-sources" id="sources">
+      <summary>Джерела</summary>
+      <ul>
+        <li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-55v1.pdf">NIST SP 800-55 Vol. 1: Measurement Guide for Information Security (2024)</a></li>
+        <li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-55v2.pdf">NIST SP 800-55 Vol. 2: Developing an Information Security Measurement Program (2024)</a></li>
+        <li><a href="https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf">NIST Cybersecurity Framework 2.0 (2024)</a></li>
+        <li><a href="https://www.nacdonline.org/globalassets/public-pdfs/2026_directors-handbook-cyber-risk_print.pdf">NACD / ISA: Director's Handbook on Cyber-Risk Oversight (2026)</a></li>
+        <li><a href="https://www.iso.org/standard/64120.html">ISO/IEC 27004:2016 — Monitoring, measurement, analysis and evaluation</a></li>
+        <li><a href="https://www.theiia.org/globalassets/site/standards/topical-requirements/cybersecurity/cybersecurity_topical_requirement.pdf">IIA: Cybersecurity Topical Requirement (2025)</a></li>
+        <li><a href="https://www.ncsc.gov.uk/sites/default/files/2026-11/Cyber-Essentials-Requirements-for-IT-Infrastructure-v3-3.pdf">NCSC: Cyber Essentials Requirements for IT Infrastructure v3.3</a></li>
+        <li><a href="https://www.cisa.gov/sites/default/files/2023-03/CISA_CPG_REPORT_v1.0.1_FINAL.pdf">CISA: Cross-Sector Cybersecurity Performance Goals v1.0.1</a></li>
+        <li><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA: Known Exploited Vulnerabilities (KEV) Catalog</a></li>
+        <li><a href="https://www.first.org/cvss/">FIRST: Common Vulnerability Scoring System (CVSS)</a></li>
+        <li><a href="https://enisa.europa.eu/topics/cybersecurity-education/awareness-campaigns/network-and-information-systems-directive-2-nis2/files/enisa_nis2_infogr05_incident-reporting.pdf">ENISA: NIS2 incident reporting</a></li>
+        <li><a href="https://www.mckinsey.com/capabilities/risk-and-resilience/our-insights/enhanced-cyberrisk-reporting-opening-doors-to-risk-based-cybersecurity">McKinsey: Enhanced cyberrisk reporting</a></li>
+        <li><a href="https://www.gartner.com/en/articles/cybersecurity-metrics">Gartner: Outcome-driven cybersecurity metrics</a></li>
+        <li><a href="https://www.csoonline.com/article/3530230/6-security-metrics-that-matter-and-4-that-don-t.html">CSO Online: Security metrics that matter and that don't</a></li>
+        <li><a href="https://blogs.ischool.berkeley.edu/i247s13/files/2013/02/WhyMostDashboardsFail.pdf">Stephen Few: Why Most Dashboards Fail</a></li>
+        <li><a href="https://www.nngroup.com/articles/dashboards-preattentive/">Nielsen Norman Group: Dashboards and preattentive processing</a></li>
+        <li><a href="https://www.protiviti.com/au-en/blogs/why-your-project-dashboards-are-lying-you">Protiviti: Why your project dashboards are lying to you</a></li>
+        <li><a href="https://www.verizon.com/about/news/breach-industry-wide-dbir-finds">Verizon: Data Breach Investigations Report 2026</a></li>
+        <li><a href="https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026">Mandiant: M-Trends 2026</a></li>
+        <li><a href="https://www.sophos.com/en-gb/legal/mdr-description">Sophos: MDR service description (приклад SLA)</a></li>
+      </ul>
+    </details>
+    <p class="sk-muted sk-foot-note">Навчальний приклад. Компанія, числа і знахідки вигадані. Переміщення карток на дошці зберігаються лише у вашому браузері.</p>
+  </footer>
+</div>
+
+<script src="assets/js/d3.min.js"></script>
+<script src="assets/js/runtime.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/draw.js"></script>
+<script src="assets/js/board.js"></script>
+<script src="assets/js/kanban.js"></script>
+<script src="assets/js/tabs.js"></script>
+</body>
+</html>
